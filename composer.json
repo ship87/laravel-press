@@ -1,9 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "ship87/laravel-press",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Laravel blog with routing and import data from Wordpress.",
     "keywords": [
-        "framework",
+        "Laravel blog as Wordpress",
         "laravel"
     ],
     "license": "MIT",

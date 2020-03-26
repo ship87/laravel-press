@@ -42,7 +42,7 @@ Run the database migrations (**Set the database connection in .env before migrat
 
     php artisan migrate
     
-Import data from wordpress
+Import data from Wordpress
 
     php artisan import-data-wordrpess {--prefix=: prefix Wordpress tables database} 
 
