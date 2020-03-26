@@ -52,3 +52,55 @@ Start the local development server
     php artisan serve
     
 You can now access the server at http://localhost:8000
+
+# Laravel блог с роутингом и переносом данных из Wordpress
+
+Перенесите свой Wordpress блог на Laravel framework
+----------
+
+# Быстрый старт
+
+## Установка
+
+Пожалуйста, ознакомьтесь с официальным руководством по установке Laravel для требований к серверу, прежде чем начать. [Официальная документация](https://laravel.com/docs/7.x/installation)
+
+
+Склонируйте репозиторий
+
+    git clone git@github.com:/ship87/laravel-press.git
+
+Переключитесь на папку с репозиторием
+
+    cd laravel-press
+
+Установите все зависимости composer
+
+    composer install
+    
+Установите все зависимости npm
+
+    npm install
+
+Скопируйте пример файла env и внесите необходимые изменения в конфигурацию файла .env.
+
+    cp .env.example .env
+
+Создайте новый ключ приложения
+
+    php artisan key:generate
+
+Запустите миграции для базы данных (** Установите соединение с базой данных в .env перед миграцией **)
+
+    php artisan migrate
+    
+Импортируйте данные из Wordpress
+
+    php artisan import-data-wordrpess {--prefix=: prefix Wordpress tables database} 
+
+Запустите локальный сервер разработки
+
+
+    php artisan serve
+    
+Теперь вы можете получить доступ к блогу по адресу http://localhost:8000
+
