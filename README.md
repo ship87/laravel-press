@@ -1,6 +1,6 @@
 # Laravel blog with routing and import data from Wordpress
 
-Transfer your Wordpress blog to the Laravel framework
+Migrate your Wordpress blog to the Laravel framework
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/ship87/laravel-press.svg)](https://github.com/ship87/laravel-press/stargazers)
