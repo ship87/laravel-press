@@ -35,6 +35,15 @@ class CategoryController extends BaseController
         $grid->column('id', __('admin.Id'));
         $grid->column('title', __('admin.Title'));
         $grid->column('slug', __('admin.Slug'));
+        $grid->column('parent_id', __('admin.Parent page'))->display(function () {
+
+            if (empty($this->parent_id)) {
+                return null;
+            }
+
+            $url = route('admin.categories.edit', ['category' => $this->parent_id]);
+            return '<a href="' . $url . '">' . $this->parent_id . '</a>';
+        });
 
         $grid->filter(function ($filter) {
             $filter->ilike('title', __('admin.Title'));
@@ -70,11 +79,18 @@ class CategoryController extends BaseController
      */
     protected function form()
     {
+        if ($this->editId > 0) {
+            $categories = CategoryModel::where('id', '!=', $this->editId)->pluck('title', 'id');
+        } else {
+            $categories = CategoryModel::pluck('title', 'id');
+        }
+
         $form = new Form(new CategoryModel());
 
         $form->text('title', __('admin.Title'))->required();
         $form->text('slug', __('admin.Slug'))
             ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:categories');
+        $form->select('parent_id', __('admin.Parent page'))->options($categories);
 
         return $form;
     }

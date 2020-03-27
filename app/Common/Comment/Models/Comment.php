@@ -31,6 +31,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Comment\Models\Comment wherePublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Comment\Models\Comment whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $parent_id
+ * @property int|null $wordpress_comment_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Comment\Models\Comment whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Comment\Models\Comment whereWordpressCommentId($value)
  */
 class Comment extends Model
 {
@@ -47,6 +51,7 @@ class Comment extends Model
      */
     protected $fillable = [
         'content',
+        'wordpress_comment_id',
         'author_name',
         'author_email',
         'entity_type',

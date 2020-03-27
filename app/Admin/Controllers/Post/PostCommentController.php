@@ -5,6 +5,7 @@ namespace App\Admin\Controllers\Post;
 use App\Admin\Controllers\BaseController;
 use App\Common\Page\Models\Post as PostModel;
 use App\Helpers\AdminHelper;
+use App\Helpers\WordHelper;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -16,6 +17,11 @@ use App\Common\Comment\Models\Comment as CommentModel;
  */
 class PostCommentController extends BaseController
 {
+    /**
+     * @var int
+     */
+    public const MAX_LENGTH_COMMENT = 100;
+
     /**
      * PostCommentController constructor.
      */
@@ -37,7 +43,9 @@ class PostCommentController extends BaseController
         $grid->column('id', __('admin.Id'));
         $grid->column('author_name', __('admin.Author name'));
         $grid->column('author_email', __('admin.Author email'));
-        $grid->column('content', __('admin.Content'));
+        $grid->column('content', __('admin.Content'))->display(function () {
+            return strip_tags(WordHelper::getPartString($this->content, self::MAX_LENGTH_COMMENT));
+        });
         $grid->column('published', __('admin.Published'))->switch(AdminHelper::getSwitchOnOff());
         $grid->column('created_at', __('admin.Created At'))->date('Y-m-d H:i:s');
         $grid->column('updated_at', __('admin.Updated At'))->date('Y-m-d H:i:s');

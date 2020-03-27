@@ -52,8 +52,26 @@ class ImportDataWordpress extends Command
 
             $this->output->writeln('Import data from Wordpress started');
 
+            $this->output->writeln('Import categories');
+            $importDataWordpressService->importCategories();
+
+            $this->output->writeln('Import tags');
+            $importDataWordpressService->importTags();
+
+            $this->output->writeln('Import posts');
             $importDataWordpressService->importPosts();
+
+            $this->output->writeln('Import pages');
             $importDataWordpressService->importPages();
+
+            $this->output->writeln('Import categories posts relations');
+            $importDataWordpressService->importCategoryPost();
+
+            $this->output->writeln('Import posts tags relations');
+            $importDataWordpressService->importPostTag();
+
+            $this->output->writeln('Import comments');
+            $importDataWordpressService->importComments();
 
             $this->output->writeln('Import data from Wordpress ended');
         } catch (\Exception $exception) {
