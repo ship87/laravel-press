@@ -2,18 +2,20 @@
 
 namespace App\Common\ImportData\Services;
 
-use App\Common\Page\Models\CategoryPost;
+use App\Common\Blog\Models\CategoryPost;
+use App\Helpers\Word;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\LazyCollection;
-use App\Common\Page\Models\Post as PostModel;
+use App\Common\Blog\Models\Post as PostModel;
 use App\Common\Page\Models\Page as PageModel;
-use App\Common\Page\Models\Category as CategoryModel;
-use App\Common\Page\Models\Tag as TagModel;
-use App\Common\Page\Models\CategoryPost as CategoryPostModel;
-use App\Common\Page\Models\PostTag as PostTagModel;
+use App\Common\Blog\Models\Category as CategoryModel;
+use App\Common\Blog\Models\Tag as TagModel;
+use App\Common\Blog\Models\CategoryPost as CategoryPostModel;
+use App\Common\Blog\Models\PostTag as PostTagModel;
 use App\Common\Comment\Models\Comment as CommentModel;
+use App\Common\Setting\Services\Setting as SettingService;
 
 /**
  * Class ImportDataWordpress
@@ -55,12 +57,18 @@ class ImportDataWordpress
     private $prefix;
 
     /**
+     * @var SettingService
+     */
+    private $settingService;
+
+    /**
      * ImportDataWordpress constructor.
      * @param string $prefix
      */
-    public function __construct(string $prefix)
+    public function __construct(string $prefix, SettingService $settingService)
     {
         $this->prefix = $prefix;
+        $this->settingService = $settingService;
     }
 
     /**
@@ -88,6 +96,8 @@ class ImportDataWordpress
             $entityId = $page->id;
             $entityType = array_search($modelType, Relation::morphMap());
 
+
+            $commentPublished = $commentWordpress->comment_approved === 1 ? true : false;
             /*
              * @var $comment CommentModel
              */
@@ -99,10 +109,19 @@ class ImportDataWordpress
             $comment->entity_id = $entityId;
             $comment->entity_type = $entityType;
             $comment->content = $commentWordpress->comment_content;
-            $comment->published = $commentWordpress->comment_approved === 1 ? true : false;
+            $comment->published = $commentPublished;
             $comment->created_at = $commentWordpress->comment_date;
             $comment->updated_at = $commentWordpress->comment_date;
             $comment->save();
+
+            $updatePageData = [
+                'comment_count' => DB::raw('comment_count+1'),
+            ];
+            if ($commentPublished) {
+                $updatePageData['comment_published_count'] = DB::raw('comment_published_count+1');
+            }
+            $page->update($updatePageData);
+
         }
 
         $this->importParentComments();
@@ -199,6 +218,7 @@ class ImportDataWordpress
      */
     public function importPosts(): void
     {
+        $sizePostPreviewContent = $this->settingService->getSizePostPreviewContent();
         $postsWordpress = $this->getPostsWordpressQuery(self::POST_TYPE_POST)->cursor();
 
         foreach ($postsWordpress as $postWordpress) {
@@ -209,6 +229,7 @@ class ImportDataWordpress
             $post = PostModel::firstOrNew(['slug' => $postWordpress->post_name]);
             $post->title = $postWordpress->post_title;
             $post->slug = $postWordpress->post_name;
+            $post->preview_content = strip_tags(Word::getPartString($postWordpress->post_content, $sizePostPreviewContent));
             $post->content = $postWordpress->post_content;
             $post->published = $postWordpress->post_status === 'publish' ? true : false;
             $post->published_at = $postWordpress->post_date;

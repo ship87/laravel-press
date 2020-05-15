@@ -6,6 +6,7 @@
 /public/sitemap.xml
 /storage/*.key
 /vendor
+/docker/data/mysql
 .env
 .env.backup
 .phpunit.result.cache

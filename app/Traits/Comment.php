@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use App\Common\Comment\Models\Comment as CommentModel;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait Comment
@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 trait Comment
 {
     /**
-     * @return MorphOne
+     * @return MorphMany
      */
-    public function comment()
+    public function comments(): MorphMany
     {
-        return $this->morphOne(CommentModel::class, 'entity');
+        return $this->morphMany(CommentModel::class, 'entity');
     }
 }

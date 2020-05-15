@@ -38,6 +38,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Page\Models\Page whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Page\Models\Page whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $comment_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Common\Comment\Models\Comment[] $comments
+ * @property-read int|null $comments_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Page\Models\Page whereCommentCount($value)
+ * @property int $comment_published_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Common\Page\Models\Page whereCommentPublishedCount($value)
  */
 class Page extends Model
 {
@@ -58,6 +64,10 @@ class Page extends Model
     protected $fillable = [
         'slug',
         'title',
+        'content',
+        'allow_comments',
+        'comment_count',
+        'comment_published_count',
     ];
 
     /**

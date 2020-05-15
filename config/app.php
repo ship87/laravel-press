@@ -56,6 +56,15 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+
+    /* Application theme */
+
+    'theme' => env('APP_THEME', 'default'),
+
+    /* Time cache settings in minutes */
+
+    'cache_time_settings' => env('APP_CACHE_TIME_SETTINGS', 30),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -175,7 +184,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MorphServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
         Torann\LaravelMetaTags\MetaTagsServiceProvider::class,
+        App\Common\Setting\Providers\SettingServiceProvider::class,
 
     ],
 

@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Helpers\UrlHelper;
+use App\Helpers\Url;
 
 /**
  * Trait Slug
@@ -13,7 +13,7 @@ trait Slug
     public function setSlugAttribute($slug): void
     {
         if (empty($slug)) {
-            $slug = UrlHelper::getUniqueSlugForModelCode(
+            $slug = Url::getUniqueSlugForModelCode(
                 [static::class],
                 'slug',
                 $this->title

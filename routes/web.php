@@ -13,11 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'MainController@index')->name('main');
-
 Route::group([
     'as' => 'client.',
 ], function () {
+
+    Route::group([
+        'namespace' => 'Blog',
+        'as' => 'blog.',
+    ], function () {
+        Route::get('/', 'PostController@index')->name('index');
+        Route::get('/page/{page}', 'PostController@index')->name('index-page');
+        Route::get('/{slug}', 'PostController@show')->name('show');
+
+        Route::get('/category/{slug}', 'CategoryController@show')->name('category.show');
+    });
 
     Route::group([
         'namespace' => 'Seo',

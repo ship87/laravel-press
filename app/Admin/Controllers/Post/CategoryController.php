@@ -3,11 +3,11 @@
 namespace App\Admin\Controllers\Post;
 
 use App\Admin\Controllers\BaseController;
-use App\Helpers\AdminHelper;
+use App\Helpers\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use App\Common\Page\Models\Category as CategoryModel;
+use App\Common\Blog\Models\Category as CategoryModel;
 
 /**
  * Class CategoryController
@@ -46,11 +46,11 @@ class CategoryController extends BaseController
         });
 
         $grid->filter(function ($filter) {
-            $filter->ilike('title', __('admin.Title'));
-            $filter->ilike('slug', __('admin.Slug'));
+            $filter->like('title', __('admin.Title'));
+            $filter->like('slug', __('admin.Slug'));
         });
 
-        $grid = AdminHelper::addSortable($grid);
+        $grid = Admin::addSortable($grid);
 
         return $grid;
     }
@@ -89,7 +89,7 @@ class CategoryController extends BaseController
 
         $form->text('title', __('admin.Title'))->required();
         $form->text('slug', __('admin.Slug'))
-            ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:categories');
+            ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:categories,slug,{{id}}');
         $form->select('parent_id', __('admin.Parent page'))->options($categories);
 
         return $form;

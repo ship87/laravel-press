@@ -12,23 +12,27 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 trait MetaTag
 {
     /**
-     * Save the model to the database.
-     *
-     * @param array $options
-     * @return mixed
+     * @return bool
      */
-    public function save(array $options = [])
+    public function saveMetaTag(): bool
     {
-        $save = parent::save($options);
-
         $meta = $this->meta;
 
-        if (!empty($meta) && $this->id !== null) {
-            $meta->entity_id = $this->id;
-            $meta->save();
+        if (empty($meta) || $this->id === null) {
+            return false;
         }
 
-        return $save;
+        $meta->entity_id = $this->id;
+
+        return $meta->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function deleteMetaTag(){
+
+        return $this->meta()->delete();
     }
 
     /**

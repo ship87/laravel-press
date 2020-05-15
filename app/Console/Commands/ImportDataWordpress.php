@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Common\ImportData\Services\ImportDataWordpress as ImportDataWordpressService;
+use App\Common\Setting\Services\Setting as SettingService;
 use Illuminate\Console\Command;
 
 /**
@@ -39,14 +40,14 @@ class ImportDataWordpress extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @param SettingService $settingService
      */
-    public function handle()
+    public function handle(SettingService $settingService)
     {
         $prefix = $this->option('prefix');
         $prefix = !$prefix ? '' : $prefix . '_';
 
-        $importDataWordpressService = new ImportDataWordpressService($prefix);
+        $importDataWordpressService = new ImportDataWordpressService($prefix, $settingService);
 
         try {
 

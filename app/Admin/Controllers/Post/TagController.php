@@ -3,11 +3,11 @@
 namespace App\Admin\Controllers\Post;
 
 use App\Admin\Controllers\BaseController;
-use App\Helpers\AdminHelper;
+use App\Helpers\Admin;
+use App\Common\Blog\Models\Tag as TagModel;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use App\Common\Page\Models\Tag as TagModel;
 
 /**
  * Class TagController
@@ -37,11 +37,11 @@ class TagController extends BaseController
         $grid->column('slug', __('admin.Slug'));
 
         $grid->filter(function ($filter) {
-            $filter->ilike('title', __('admin.Title'));
-            $filter->ilike('slug', __('admin.Slug'));
+            $filter->like('title', __('admin.Title'));
+            $filter->like('slug', __('admin.Slug'));
         });
 
-        $grid = AdminHelper::addSortable($grid);
+        $grid = Admin::addSortable($grid);
 
         return $grid;
     }
@@ -72,9 +72,9 @@ class TagController extends BaseController
     {
         $form = new Form(new TagModel());
 
-        $form->text('title', __('admin.Title'))->rules('required|unique:tags');
+        $form->text('title', __('admin.Title'))->rules('required|unique:tags,title,{{id}}');
         $form->text('slug', __('admin.Slug'))
-            ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:tags');
+            ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:tags,slug,{{id}}');
 
         return $form;
     }

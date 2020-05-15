@@ -46,10 +46,10 @@ Import data from Wordpress
 
     php artisan import-data-wordrpess {--prefix=: prefix Wordpress tables database} 
 
-Start the local development server
+Start the local development server on Docker
 
-
-    php artisan serve
+    make init
+    make migrate
     
 You can now access the server at http://localhost:8000
 
@@ -97,10 +97,10 @@ You can now access the server at http://localhost:8000
 
     php artisan import-data-wordrpess {--prefix=: prefix Wordpress tables database} 
 
-Запустите локальный сервер разработки
+Запустите локальный сервер разработки на Docker
 
+    make init
+    make migrate
 
-    php artisan serve
-    
 Теперь вы можете получить доступ к блогу по адресу http://localhost:8000
 

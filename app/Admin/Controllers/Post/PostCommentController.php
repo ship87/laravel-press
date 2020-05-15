@@ -3,9 +3,9 @@
 namespace App\Admin\Controllers\Post;
 
 use App\Admin\Controllers\BaseController;
-use App\Common\Page\Models\Post as PostModel;
-use App\Helpers\AdminHelper;
-use App\Helpers\WordHelper;
+use App\Common\Blog\Models\Post as PostModel;
+use App\Helpers\Admin;
+use App\Helpers\Word;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -44,19 +44,19 @@ class PostCommentController extends BaseController
         $grid->column('author_name', __('admin.Author name'));
         $grid->column('author_email', __('admin.Author email'));
         $grid->column('content', __('admin.Content'))->display(function () {
-            return strip_tags(WordHelper::getPartString($this->content, self::MAX_LENGTH_COMMENT));
+            return strip_tags(Word::getPartString($this->content, self::MAX_LENGTH_COMMENT));
         });
-        $grid->column('published', __('admin.Published'))->switch(AdminHelper::getSwitchOnOff());
+        $grid->column('published', __('admin.Published'))->switch(Admin::getSwitchOnOff());
         $grid->column('created_at', __('admin.Created At'))->date('Y-m-d H:i:s');
         $grid->column('updated_at', __('admin.Updated At'))->date('Y-m-d H:i:s');
 
         $grid->filter(function ($filter) {
-            $filter->ilike('author_name', __('admin.Author name'));
-            $filter->ilike('author_email', __('admin.Author email'));
-            $filter->ilike('content', __('admin.Content'));
+            $filter->like('author_name', __('admin.Author name'));
+            $filter->like('author_email', __('admin.Author email'));
+            $filter->like('content', __('admin.Content'));
         });
 
-        $grid = AdminHelper::addSortable($grid);
+        $grid = Admin::addSortable($grid);
 
         return $grid;
     }

@@ -3,14 +3,14 @@
 namespace App\Admin\Controllers\Post;
 
 use App\Admin\Controllers\BaseController;
-use App\Common\Page\Models\Category as CategoryModel;
+use App\Common\Blog\Models\Category as CategoryModel;
 use App\Common\Seo\Models\MetaTag as MetaTagModel;
-use App\Helpers\AdminHelper;
+use App\Common\Blog\Models\Post as PostModel;
+use App\Common\Blog\Models\Tag as TagModel;
+use App\Helpers\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use App\Common\Page\Models\Post as PostModel;
-use App\Common\Page\Models\Tag as TagModel;
 
 /**
  * Class PostController
@@ -38,18 +38,18 @@ class PostController extends BaseController
         $grid->column('id', __('admin.Id'));
         $grid->column('title', __('admin.Title'));
         $grid->column('slug', __('admin.Slug'));
-        $grid->column('published', __('admin.Published'))->switch(AdminHelper::getSwitchOnOff());
-        $grid->column('allow_comments', __('admin.Allow comments'))->switch(AdminHelper::getSwitchOnOff());
+        $grid->column('published', __('admin.Published'))->switch(Admin::getSwitchOnOff());
+        $grid->column('allow_comments', __('admin.Allow comments'))->switch(Admin::getSwitchOnOff());
         $grid->column('published_at', __('admin.Published At'));
         $grid->column('created_at', __('admin.Created At'))->date('Y-m-d H:i:s');
         $grid->column('updated_at', __('admin.Updated At'))->date('Y-m-d H:i:s');
 
         $grid->filter(function ($filter) {
-            $filter->ilike('title', __('admin.Title'));
-            $filter->ilike('slug', __('admin.Slug'));
+            $filter->like('title', __('admin.Title'));
+            $filter->like('slug', __('admin.Slug'));
         });
 
-        $grid = AdminHelper::addSortable($grid);
+        $grid = Admin::addSortable($grid);
 
         return $grid;
     }
@@ -91,7 +91,7 @@ class PostController extends BaseController
 
             $form->text('title', __('admin.Title'))->required();
             $form->text('slug', __('admin.Slug'))
-                ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:posts');
+                ->rules('nullable|regex:/^[a-z0-9-]+$/i|unique:posts,slug,{{id}}');
             $form->datetime('published_at', __('admin.Published At'));
             $form->summernote('content', __('admin.Content'));
             $form->switch('published', __('admin.Published'));

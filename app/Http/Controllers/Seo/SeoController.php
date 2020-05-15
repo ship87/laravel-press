@@ -20,11 +20,8 @@ class SeoController extends Controller
      */
     public function showRobots(SettingService $settingService)
     {
-
-        /** @var SettingModel $robots */
-        $robots = $settingService->getByName('robots');
-        $text = $robots instanceof SettingModel ? $robots->value : '';
-        $contents = View::make('client.seo.robots', ['text' => $text])->with('url', route('main'));
+        $robots = $settingService->getRobots();
+        $contents = View::make('client.seo.robots', ['text' => $robots])->with('url', route('main'));
 
         $response = Response::make($contents);
         $response->header('Content-Type', 'text/plain');
