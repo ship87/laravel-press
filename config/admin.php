@@ -404,7 +404,7 @@ return [
             // Editor configuration
             'config' => [
                 'lang' => 'ru-RU',
-                'height' => 200,
+                'height' => 400,
             ]
         ]
     ],

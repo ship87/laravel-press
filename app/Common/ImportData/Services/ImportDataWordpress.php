@@ -93,9 +93,9 @@ class ImportDataWordpress
             }
 
             $modelType = self::ALLOWED_COMMENTS_POST_TYPES[$commentWordpress->post_type];
+
             $entityId = $page->id;
             $entityType = array_search($modelType, Relation::morphMap());
-
 
             $commentPublished = $commentWordpress->comment_approved === 1 ? true : false;
             /*
@@ -121,7 +121,6 @@ class ImportDataWordpress
                 $updatePageData['comment_published_count'] = DB::raw('comment_published_count+1');
             }
             $page->update($updatePageData);
-
         }
 
         $this->importParentComments();

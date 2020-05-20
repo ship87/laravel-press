@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Common\Page\Models\Page;
-use App\Common\Page\Models\Post;
+use App\Common\Blog\Models\Post;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
