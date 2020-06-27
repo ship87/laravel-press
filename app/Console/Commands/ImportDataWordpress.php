@@ -17,7 +17,7 @@ class ImportDataWordpress extends Command
      *
      * @var string
      */
-    protected $signature = 'import-data-wordrpess {--prefix=}';
+    protected $signature = 'wordpress:import-data {--prefix=}';
 
     /**
      * The console command description.

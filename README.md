@@ -44,7 +44,7 @@ Run the database migrations (**Set the database connection in .env before migrat
     
 Import data from Wordpress
 
-    php artisan import-data-wordrpess {--prefix=: prefix Wordpress tables database} 
+    php artisan wordrpess:import-data {--prefix=: prefix Wordpress tables database} 
 
 Start the local development server on Docker
 
@@ -95,7 +95,7 @@ You can now access the server at http://localhost:8000
     
 Импортируйте данные из Wordpress
 
-    php artisan import-data-wordrpess {--prefix=: prefix Wordpress tables database} 
+    php artisan wordrpess:import-data {--prefix=: prefix Wordpress tables database} 
 
 Запустите локальный сервер разработки на Docker
 

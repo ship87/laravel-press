@@ -90,7 +90,8 @@ class Post extends Model
      */
     protected $casts = [
         'published' => 'boolean',
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
+        'allow_comments' => 'boolean',
     ];
 
     /**

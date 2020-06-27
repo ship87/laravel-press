@@ -47,6 +47,12 @@ class PostCommentController extends BaseController
             return strip_tags(Word::getPartString($this->content, self::MAX_LENGTH_COMMENT));
         });
         $grid->column('published', __('admin.Published'))->switch(Admin::getSwitchOnOff());
+
+        $grid->column('entity', __('admin.Post'))->display(function () {
+            $url = route('admin.posts.edit', ['post' => $this->entity->id]);
+            return '<a href="' . $url . '">' . $this->entity->id . '</a>';
+        });
+
         $grid->column('created_at', __('admin.Created At'))->date('Y-m-d H:i:s');
         $grid->column('updated_at', __('admin.Updated At'))->date('Y-m-d H:i:s');
 

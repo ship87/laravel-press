@@ -19,7 +19,7 @@
 
             <footer class="entry-meta">
 
-            {{ \App\Helpers\Date::getFormatted($post->published_at, 'Y-m-d') }}&nbsp;
+                {{ \App\Helpers\Date::getFormatted($post->published_at, 'Y-m-d') }}&nbsp;
 
                 @if($post->categories->isNotEmpty())
                     Categories:&nbsp;
@@ -43,5 +43,8 @@
 
     <h3 id="reply-title" class="comment-reply-title">Read also</h3>
 
+    @if($post->allow_comments)
+        @include('client.themes.default.blog.partials.form-add-comment')
+    @endif
 @endsection
 

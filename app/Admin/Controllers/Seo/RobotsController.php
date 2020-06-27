@@ -81,7 +81,7 @@ class RobotsController extends BaseController
     {
         $form = new Form(new Setting());
 
-        $form->textarea('value', __('admin.Value'));
+        $form->textarea('value', __('admin.Value'))->rows(30);
 
         $form->tools(function (Tools $tools) {
             $tools->disableView();

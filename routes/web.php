@@ -25,7 +25,7 @@ Route::group([
         Route::get('/page/{page}', 'PostController@index')->name('index-page');
         Route::get('/{slug}', 'PostController@show')->name('show');
 
-        Route::get('/category/{slug}', 'CategoryController@show')->name('category.show');
+        Route::get('/category/{slug}', 'PostController@showCategory')->name('show-category');
     });
 
     Route::group([

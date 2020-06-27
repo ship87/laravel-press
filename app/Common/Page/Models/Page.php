@@ -77,5 +77,6 @@ class Page extends Model
      */
     protected $casts = [
         'published' => 'boolean',
+        'allow_comments' => 'boolean',
     ];
 }

@@ -128,6 +128,8 @@ return [
     'Created At'             => 'Created At',
     'Tags'                   => 'Tags',
     'Pages comments'         => 'Pages comments',
+    'Page'                   => 'Page',
+    'Post'                   => 'Post',
     'Posts comments'         => 'Posts comments',
     'Author name'            => 'Author name',
     'Author email'           => 'Author email',

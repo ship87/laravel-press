@@ -41,18 +41,20 @@ class Post
 
     /**
      * @param int $page
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @param int $limit
+     * @param string $categorySlug
+     * @return LengthAwarePaginator
      */
-    public function getPaginated(int $page, int $limit): LengthAwarePaginator
+    public function getPaginated(int $page, int $limit, string $categorySlug = ''): LengthAwarePaginator
     {
         if ($this->settingService->getTimeCachePosts() === 0) {
-            return $this->getPaginatedQuery($page, $limit);
+            return $this->getPaginatedQuery($page, $limit, $categorySlug);
         }
 
         $name = 'posts-index-' . $page . '-' . $limit;
         return Cache::remember($name, $this->settingService->getTimeCachePosts(),
-            function () use ($page, $limit) {
-                return $this->getPaginatedQuery($page, $limit);
+            function () use ($page, $limit, $categorySlug) {
+                return $this->getPaginatedQuery($page, $limit, $categorySlug);
             });
     }
 
@@ -68,11 +70,19 @@ class Post
     /**
      * @param int $page
      * @param int $limit
+     * @param string $categorySlug
      * @return LengthAwarePaginator
      */
-    private function getPaginatedQuery(int $page, int $limit): LengthAwarePaginator
+    private function getPaginatedQuery(int $page, int $limit, string $categorySlug = ''): LengthAwarePaginator
     {
-        return PostModel::published()
+        $query = PostModel::query();
+        if (!empty($categorySlug)) {
+            $query->whereHas('categories', function ($query) use ($categorySlug) {
+                return $query->where('slug', '=', $categorySlug);
+            });
+        }
+
+        return $query->published()
             ->withRelationsPreview()
             ->exclude(['content'])
             ->orderBy('published_at', 'desc')

@@ -40,7 +40,7 @@ class PostController extends BaseController
         $grid->column('slug', __('admin.Slug'));
         $grid->column('published', __('admin.Published'))->switch(Admin::getSwitchOnOff());
         $grid->column('allow_comments', __('admin.Allow comments'))->switch(Admin::getSwitchOnOff());
-        $grid->column('published_at', __('admin.Published At'));
+        $grid->column('published_at', __('admin.Published At'))->date('Y-m-d H:i:s');
         $grid->column('created_at', __('admin.Created At'))->date('Y-m-d H:i:s');
         $grid->column('updated_at', __('admin.Updated At'))->date('Y-m-d H:i:s');
 

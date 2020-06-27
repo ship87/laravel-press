@@ -30,7 +30,8 @@ trait MetaTag
     /**
      * @return bool
      */
-    public function deleteMetaTag(){
+    public function deleteMetaTag()
+    {
 
         return $this->meta()->delete();
     }
@@ -54,7 +55,7 @@ trait MetaTag
      *
      * @return array
      */
-    protected function getArrayableAppends()
+    protected function getArrayableAppends(): array
     {
         $this->appends = array_unique(array_merge($this->appends, [
                 'meta_title',
@@ -70,7 +71,7 @@ trait MetaTag
     /**
      * @return string|null
      */
-    public function getMetaTitleAttribute()
+    public function getMetaTitleAttribute(): ?string
     {
         $metaTag = $this->findMetaTag();
 
@@ -93,7 +94,7 @@ trait MetaTag
     /**
      * @return string|null
      */
-    public function getMetaDescriptionAttribute()
+    public function getMetaDescriptionAttribute(): ?string
     {
         $metaTag = $this->findMetaTag();
 
@@ -116,7 +117,7 @@ trait MetaTag
     /**
      * @return string|null
      */
-    public function getMetaKeywordsAttribute()
+    public function getMetaKeywordsAttribute(): ?string
     {
         $metaTag = $this->findMetaTag();
 

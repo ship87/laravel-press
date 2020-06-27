@@ -47,12 +47,11 @@ $firstCategory = $post->getFirstCategory();
     <footer class="entry-meta">
         {{ \App\Helpers\Date::getFormatted($post->published_at, 'Y-m-d') }} &nbsp;
         @if($firstCategory instanceof \App\Common\Blog\Models\Category)
-            <a href="{{ route('client.blog.category.show', ['slug' => $firstCategory->slug]) }}"
+            <a href="{{ route('client.blog.show-category', ['slug' => $firstCategory->slug]) }}"
                rel="category tag">{{ $firstCategory->title }}</a>
             <span class="spacer"> // </span>
         @endif
-        <a href="{{ route('client.blog.show', ['slug' => $post->slug]) }}">{{ $post->comment_published_count }}
-            {{ trans_choice('comment|comments', $post->comment_published_count) }}</a>
+        <a href="{{ route('client.blog.show', ['slug' => $post->slug]) }}">{{ $post->comment_published_count }} {{ trans_choice('comment|comments', $post->comment_published_count) }}</a>
     </footer>
 
 </article>

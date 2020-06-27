@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Seo;
-
-use App\Common\Setting\Models\Setting as SettingModel;
 use App\Common\Setting\Services\Setting as SettingService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;

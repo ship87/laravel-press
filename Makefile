@@ -9,6 +9,7 @@ ps:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) -p $(PROJECT_NAME) ps
 
 init:
+	sudo rm -R ./docker/data/mysql
 	docker-compose -f $(DOCKER_COMPOSE_FILE) -p $(PROJECT_NAME) up -d --build --force-recreate
 	docker exec $(PROJECT_NAME)_app cp .env.example .env
 	docker exec $(PROJECT_NAME)_app composer install
